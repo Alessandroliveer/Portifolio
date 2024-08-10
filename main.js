@@ -1,3 +1,51 @@
+// Função para ajustar o layout para dispositivos móveis
+function adjustForMobile() {
+    const screenWidth = window.innerWidth;
+
+    // Verifica se a largura da tela é menor que 768px (um padrão comum para dispositivos móveis)
+    if (screenWidth < 768) {
+
+        // Ajusta o tamanho da navegação
+        const navMenu = document.getElementById("myNavMenu");
+        navMenu.style.fontSize = "14px"; // Reduz o tamanho da fonte para caber melhor em telas pequenas
+
+        // Ajusta o tamanho do cabeçalho ao rolar a página
+        const navHeader = document.getElementById("header");
+        navHeader.style.height = "60px";
+        navHeader.style.lineHeight = "60px";
+
+        // Ajusta o tamanho dos botões de navegação
+        const footerButtons = document.querySelectorAll('footer article button');
+        footerButtons.forEach(button => {
+            button.style.padding = '0 10px 0 14px'; // Menos padding para caber melhor em telas pequenas
+            button.style.fontSize = '14px'; // Reduz o tamanho da fonte
+        });
+
+        // Ajusta o tamanho das seções reveladas ao rolar
+        const revealElements = document.querySelectorAll('.featured-text-card, .featured-name, .featured-text-info, .featured-text-btn, .social_icons, .featured-image, .project-box, .top-header, .about-info, .contact-info, .skills-box, .form-control');
+        revealElements.forEach(element => {
+            element.style.padding = '10px'; // Reduz o padding para que os elementos fiquem mais compactos
+        });
+
+        // Ajusta o container principal
+        const containers = document.querySelectorAll('.container');
+        containers.forEach(container => {
+            container.style.maxWidth = '100%'; // Usar a largura total da tela em dispositivos móveis
+            container.style.padding = '0 10px'; // Reduz o padding lateral
+        });
+
+        // Ajusta os ícones sociais
+        const socialIcons = document.querySelector('.socials');
+        socialIcons.style.gap = '16px'; // Reduz o espaçamento entre os ícones sociais
+        socialIcons.style.fontSize = '16px'; // Reduz o tamanho dos ícones sociais
+    }
+}
+
+// Chama a função ao carregar a página e ao redimensionar a janela
+document.addEventListener('DOMContentLoaded', adjustForMobile);
+w
+
+
 /* ----- NAVIGATION BAR FUNCTION ----- */
 function myMenuFunction(){
   var menuBtn = document.getElementById("myNavMenu");
