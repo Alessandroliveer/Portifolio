@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- --------- UNICONS ---------- -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+    <!-- Adicione este link dentro da tag <head> para incluir o Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- --------- CSS ---------- -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- --------- FAVICON ---------- -->
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+    <title>Portfólio | Alessandro Óliver</title>
+</head>
+<body>
+   <div class="container">
+    <!-- --------------- HEADER --------------- -->
+      <nav id="header">
+        <div class="nav-logo">
+            <p class="nav-name">Óliver</p>
+            <span>.</span>
+        </div>
+        <div class="nav-menu" id="myNavMenu">
+            <ul class="nav_menu_list">
+                <li class="nav_list">
+                    <a href="#home" class="nav-link active-link">Início</a>
+                    <div class="circle"></div>
+                </li>
+                <li class="nav_list">
+                    <a href="#about" class="nav-link">Sobre</a>
+                    <div class="circle"></div>
+                </li>
+                <li class="nav_list">
+                    <a href="#projects" class="nav-link">Projetos</a>
+                    <div class="circle"></div>
+                </li>
+                <li class="nav_list">
+                    <a href="#contact" class="nav-link">Contato</a>
+                    <div class="circle"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-button">
+            <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
+                <button class="btn">Baixar Currículo <i class="fas fa-file-alt"></i></button>
+            </a>            
+        </div>
+        <div class="nav-menu-btn">
+            <i class="fas fa-bars" onclick="myMenuFunction()"></i>
+        </div>
+      </nav>
+
+    <!-- -------------- MAIN ---------------- -->
+    <main class="wrapper">
+       <!-- -------------- FEATURED BOX ---------------- -->
+       <section class="featured-box" id="home">
+          <div class="featured-text">
+            <div class="featured-text-card">
+                <span>Alessandro Óliver</span>
+            </div>
+            <div class="featured-name">
+                <p>Eu sou <span class="typedText"></span></p>
+            </div>
+            <div class="featured-text-info">
+                <p>Aumente as vendas e automatize o atendimento de sua empresa com Bots de Atendimento, Dados de Clientes(Nome, Contato e Endereço), Mensagens em Massa via WhatsApp e Anúncios Patrocinados, todos direcionados a + suas vendas!</p>
+            </div>
+            <div class="featured-text-btn">
+                <a href="#contact" class="btn-link">
+                    <button class="btn blue-btn">Contrate-me</button>
+                </a>
+                <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
+                    <button class="btn">Baixar Currículo <i class="fas fa-file-alt"></i></button>
+                </a>                
+            </div>
+            <div class="social_icons">
+                <img
+                    src="./images/linkedin.png"
+                    alt="My LinkedIn profile"
+                    class="icon"
+                    onclick="location.href='https://linkedin.com/in/alessandro-lopes-6b00a82b4/'"
+                />
+                    <img
+                    src="./images/instagram.png"
+                    alt="Meu instagram Profissional"
+                    class="icon"
+                    onclick="location.href='https://instagram.com/alessandroliveer'"
+                />
+            </div>
+          </div>
+          <div class="featured-image">
+            <div class="image">
+                <img src="images/avatar.png" alt="avatar" class="avatar">
+       </section>
+
+       <!-- -------------- ABOUT BOX ---------------- -->
+       <section class="section" id="about">
+          <div class="top-header">
+            <h1>Sobre Mim</h1>
+          </div>
+          <div class="row">
+            <div class="col">
+                <div class="about-info">
+                    <h3>Minha Historia</h3>
+                    <p>A + de 3 anos trabalhando com o setor de vendas de negócios locais e desenvolvendo sistemas para ajudar empresas a venderem mais através de Bot's de Automação, levantamento de dados sobre o cliente(Nome, Contato e Endereço) e distribuição de conteúdo através das redes sociais com trafego pago e WhatsApp com Bot's de atendimento e envio em massa.</p>
+                    <div class="about-btn">
+                        <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
+                            <button class="btn">Baixar Currículo <i class="fas fa-file-alt"></i></button>
+                        </a>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="skills-box">
+                    <div class="skills-header">
+                        <h3>Canais de distribuição</h3>
+                    </div>
+                    <div class="skills-list">
+                        <span>Trafego Pago</span>
+                        <span>Envio em Massa</span>
+                    </div>
+                </div>
+                <div class="skills-box">
+                    <div class="skills-header">
+                        <h3>Automação</h3>
+                    </div>
+                    <div class="skills-list">
+                        <span>Bot's de Atendimento</span>
+                        <span>Relatorio Mensal</span>
+                    </div>
+                </div>
+                <div class="skills-box">
+                    <div class="skills-header">
+                        <h3>Levantamento de Dados</h3>
+                    </div>
+                    <div class="skills-list">
+                        <span>Contato</span>
+                        <span>Nome</span>
+                        <span>Endereço</span>
+                        <span>Média de 3.000 cct's</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+       </section>
+
+       <!-- -------------- PROJECT BOX ---------------- -->
+       <section class="section" id="projects">
+          <div class="top-header">
+              <h1>Projetos</h1>
+          </div>
+          <div class="project-container">
+            <div class="project-box">
+                <i class="fas fa-briefcase"></i>
+                <h3>Completos</h3>
+                <label>15+ Projetos Finalizados</label>
+            </div>
+            <div class="project-box">
+                <i class="fas fa-users"></i>
+                <h3>Clientes</h3>
+                <label>25+ Clientes Satisfeitos</label>
+            </div>
+            <div class="project-box">
+                <i class="fas fa-award"></i>
+                <h3>Experiência</h3>
+                <label>+ de 3 Anos na área</label>
+            </div>
+          </div>
+       </section>
+
+       <!-- -------------- CONTACT BOX ---------------- -->
+        <section class="section" id="contact">
+            <div class="top-header">
+                <h1>Entre em Contato</h1>
+                <span>Você tem um projeto em mente? Entre em contato comigo aqui</span>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="contact-info">
+                        <h2>Me Encontre <i class="fas fa-map-marker-alt"></i></h2>
+                        <p><i class="fas fa-envelope"></i> Email: alessandroliveer@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> Tel: +82 9175-2340</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <form class="form-control" id="contactForm" action="{{ url_for('enviar_mensagem') }}" method="POST">
+                        <div class="form-inputs">
+                            <input type="text" class="input-field" name="nome" placeholder="Seu Nome">
+                            <input type="email" class="input-field" name="email" placeholder="Seu Email">
+                        </div>
+                        <div class="text-area">
+                            <textarea name="mensagem" placeholder="Sua Mensagem" required></textarea>
+                        </div>
+                        <div class="form-button">
+                            <button class="btn" type="submit">Enviar <i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- --------------- FOOTER --------------- -->
+    <footer>
+        <div class="top-footer">
+            <p>Alessandro Óliver</p>
+        </div>
+        <div class="middle-footer">
+            <ul class="footer-menu">
+                <li class="footer_menu_list">
+                    <a href="#home">Início</a>
+                </li>
+                <li class="footer_menu_list">
+                    <a href="#about">Sobre</a>
+                </li>
+                <li class="footer_menu_list">
+                    <a href="#projects">Projetos</a>
+                </li>
+                <li class="footer_menu_list">
+                    <a href="#contact">Contato</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-social-icons">
+            <img
+                src="./images/linkedin.png"
+                alt="My LinkedIn profile"
+                class="icon"
+                onclick="location.href='https://linkedin.com/alessandro-lopes-6b00a82b4'"
+            />
+            <img
+                src="./images/instagram.png"
+                alt="Meu instagram Profissional"
+                class="icon"
+                onclick="location.href='https://instagram.com/alessandroliveer'"
+            />
+        </div>
+        <div class="bottom-footer">
+            <p>Copyright &copy; <a href="#home" style="text-decoration: none;">Alessandro Óliver</a> - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- ----- TYPING JS Link ----- -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+    <!-- ----- SCROLL REVEAL JS Link----- -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- ----- MAIN JS ----- -->
+    <script src="main.js"></script>
+</body>
+</html>
