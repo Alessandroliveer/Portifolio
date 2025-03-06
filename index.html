@@ -1,260 +1,872 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- --------- UNICONS ---------- -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-
-    <!-- Adicione este link dentro da tag <head> para incluir o Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- --------- CSS ---------- -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- --------- FAVICON ---------- -->
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-
-    <title>Portfólio | Alessandro Óliver</title>
+    <title>Para o meu amor 🤍</title>
+    <style>
+        :root {
+            --primary-color: #ff4d79;
+            --secondary-color: #ff85a1;
+            --text-color: #333;
+            --bg-color: #fff6f8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+        
+        .envelope {
+            width: 300px;
+            height: 180px;
+            background: linear-gradient(135deg, #ff6b8b, #ff4d79);
+            position: relative;
+            margin: 50px auto;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            animation: float 3s infinite alternate;
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff5583, #ff3366);
+            clip-path: polygon(0 0, 50% 50%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 3;
+        }
+        
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope:hover {
+            transform: translateY(-10px);
+        }
+        
+        .letter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+            height: 160px;
+            background-color: white;
+            border-radius: 5px;
+            z-index: 2;
+            overflow: hidden;
+            transition: transform 0.6s ease 0.2s, top 0.6s ease 0.2s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .envelope.open .letter {
+            top: -150px;
+            transform: translateZ(50px);
+        }
+        
+        .heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            bottom: -100px;
+            font-size: 24px;
+            color: var(--primary-color);
+            animation: float-up var(--duration, 6s) linear forwards;
+            opacity: 0.8;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(var(--rotate, 360deg));
+                opacity: 0;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        .card {
+            width: 80%;
+            max-width: 600px;
+            min-height: 400px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 77, 121, 0.2);
+            padding: 30px;
+            margin: 30px auto;
+            text-align: center;
+            display: none;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .card.visible {
+            display: block;
+            animation: card-appear 1s forwards;
+        }
+        
+        @keyframes card-appear {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .memory-card {
+            background-color: var(--secondary-color);
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .memory-card .front,
+        .memory-card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        
+        .memory-card .front {
+            background-color: var(--secondary-color);
+            transform: rotateY(180deg);
+        }
+        
+        .memory-card .back {
+            background-color: var(--primary-color);
+        }
+        
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .btn:hover {
+            background-color: #ff2d62;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 77, 121, 0.3);
+        }
+        
+        .special-message {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 25px 0;
+            padding: 15px;
+            border: 2px dashed var(--secondary-color);
+            border-radius: 10px;
+            background-color: rgba(255, 133, 161, 0.1);
+        }
+        
+        .playlist {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .playlist h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .playlist ul {
+            list-style-type: none;
+        }
+        
+        .playlist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f3f3;
+            display: flex;
+            align-items: center;
+        }
+        
+        .playlist li:before {
+            content: "♫";
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .photo-placeholder {
+            width: calc(33.333% - 10px);
+            height: 100px;
+            background-color: #f9f9f9;
+            border: 2px dashed var(--secondary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .timeline {
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:after {
+            content: "";
+            position: absolute;
+            right: -10px;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(50%);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:after {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
 </head>
 <body>
-   <div class="container">
-    <!-- --------------- HEADER --------------- -->
-      <nav id="header">
-        <div class="nav-logo">
-            <p class="nav-name">Óliver</p>
-            <span>.</span>
-        </div>
-        <div class="nav-menu" id="myNavMenu">
-            <ul class="nav_menu_list">
-                <li class="nav_list">
-                    <a href="#home" class="nav-link active-link">Início</a>
-                    <div class="circle"></div>
-                </li>
-                <li class="nav_list">
-                    <a href="#about" class="nav-link">Sobre</a>
-                    <div class="circle"></div>
-                </li>
-                <li class="nav_list">
-                    <a href="#projects" class="nav-link">Projetos</a>
-                    <div class="circle"></div>
-                </li>
-                <li class="nav_list">
-                    <a href="#contact" class="nav-link">Contato</a>
-                    <div class="circle"></div>
-                </li>
-            </ul>
-        </div>
-        <div class="nav-button">
-            <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
-                <button class="btn">Baixar Apresentação
-                <i class="fas fa-file-alt"></i></button>
-            </a>            
-        </div>
-        <div class="nav-menu-btn">
-            <i class="fas fa-bars" onclick="myMenuFunction()"></i>
-        </div>
-      </nav>
-
-    <!-- -------------- MAIN ---------------- -->
-    <main class="wrapper">
-       <!-- -------------- FEATURED BOX ---------------- -->
-       <section class="featured-box" id="home">
-          <div class="featured-text">
-            <div class="featured-text-card">
-                <span>Alessandro Óliver</span>
-            </div>
-            <div class="featured-name">
-                <p>Eu sou <span class="typedText"></span></p>
-            </div>
-            <div class="featured-text-info">
-                <p>Aumente as vendas e automatize o atendimento de sua empresa com Bots de Atendimento, Dados de Clientes(Nome, Contato e Endereço), Mensagens em Massa via WhatsApp e Anúncios Patrocinados, todos direcionados a + suas vendas!</p>
-            </div>
-            <div class="featured-text-btn">
-                <a href="#contact" class="btn-link">
-                    <button class="btn blue-btn">Contrate-me</button>
-                </a>
-                <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
-                    <button class="btn">Baixar Apresentação <i class="fas fa-file-alt"></i></button>
-                </a>                
-            </div>
-            <div class="social_icons">
-                <img
-                    src="./images/linkedin.png"
-                    alt="My LinkedIn profile"
-                    class="icon"
-                    onclick="location.href='https://linkedin.com/in/alessandro-lopes-6b00a82b4/'"
-                />
-                    <img
-                    src="./images/instagram.png"
-                    alt="Meu instagram Profissional"
-                    class="icon"
-                    onclick="location.href='https://instagram.com/alessandroliveer'"
-                />
-            </div>
-          </div>
-          <div class="featured-image">
-            <div class="image">
-                <img src="images/avatar.png" alt="avatar" class="avatar">
-       </section>
-
-       <!-- -------------- ABOUT BOX ---------------- -->
-       <section class="section" id="about">
-          <div class="top-header">
-            <h1>Sobre Mim</h1>
-          </div>
-          <div class="row">
-            <div class="col">
-                <div class="about-info">
-                    <h3>Minha Historia</h3>
-                    <p>A + de 3 anos trabalhando com o setor de vendas de negócios locais e desenvolvendo sistemas para ajudar empresas a venderem mais através de Bot's de Automação, levantamento de dados sobre o cliente(Nome, Contato e Endereço) e distribuição de conteúdo através das redes sociais com trafego pago e WhatsApp com Bot's de atendimento e envio em massa.</p>
-                    <div class="about-btn">
-                        <a class="btn-link" href="{{ url_for('serve_pdf') }}" target="_blank">
-                            <button class="btn">Baixar Apresentação <i class="fas fa-file-alt"></i></button>
-                        </a>                        
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="skills-box">
-                    <div class="skills-header">
-                        <h3>Canais de distribuição</h3>
-                    </div>
-                    <div class="skills-list">
-                        <span>Trafego Pago</span>
-                        <span>Envio em Massa</span>
-                    </div>
-                </div>
-                <div class="skills-box">
-                    <div class="skills-header">
-                        <h3>Automação</h3>
-                    </div>
-                    <div class="skills-list">
-                        <span>Bot's de Atendimento</span>
-                        <span>Relatorio Mensal</span>
-                    </div>
-                </div>
-                <div class="skills-box">
-                    <div class="skills-header">
-                        <h3>Levantamento de Dados</h3>
-                    </div>
-                    <div class="skills-list">
-                        <span>Contato</span>
-                        <span>Nome</span>
-                        <span>Endereço</span>
-                        <span>Média de 3.000 cct's</span>
-                    </div>
-                </div>
-            </div>
-          </div>
-       </section>
-
-       <!-- -------------- PROJECT BOX ---------------- -->
-       <section class="section" id="projects">
-          <div class="top-header">
-              <h1>Projetos</h1>
-          </div>
-          <div class="project-container">
-            <div class="project-box">
-                <i class="fas fa-briefcase"></i>
-                <h3>Completos</h3>
-                <label>15+ Projetos Finalizados</label>
-            </div>
-            <div class="project-box">
-                <i class="fas fa-users"></i>
-                <h3>Clientes</h3>
-                <label>25+ Clientes Satisfeitos</label>
-            </div>
-            <div class="project-box">
-                <i class="fas fa-award"></i>
-                <h3>Experiência</h3>
-                <label>+ de 3 Anos na área</label>
-            </div>
-          </div>
-       </section>
-
-       <!-- -------------- CONTACT BOX ---------------- -->
-        <section class="section" id="contact">
-            <div class="top-header">
-                <h1>Entre em Contato</h1>
-                <span>Você tem um projeto em mente? Entre em contato comigo aqui</span>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="contact-info">
-                        <h2>Me Encontre <i class="fas fa-map-marker-alt"></i></h2>
-                        <p><i class="fas fa-envelope"></i> Email: alessandroliveer@gmail.com</p>
-                        <p><i class="fas fa-phone"></i> Tel: +82 9175-2340</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <form class="form-control" id="contactForm" action="{{ url_for('enviar_mensagem') }}" method="POST">
-                        <div class="form-inputs">
-                            <input type="text" class="input-field" name="nome" placeholder="Seu Nome">
-                            <input type="email" class="input-field" name="email" placeholder="Seu Email">
-                        </div>
-                        <div class="text-area">
-                            <textarea name="mensagem" placeholder="Sua Mensagem" required></textarea>
-                        </div>
-                        <div class="form-button">
-                            <button class="btn" type="submit">Enviar <i class="fas fa-paper-plane"></i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- --------------- FOOTER --------------- -->
-    <footer>
-        <div class="top-footer">
-            <p>Alessandro Óliver</p>
-        </div>
-        <div class="middle-footer">
-            <ul class="footer-menu">
-                <li class="footer_menu_list">
-                    <a href="#home">Início</a>
-                </li>
-                <li class="footer_menu_list">
-                    <a href="#about">Sobre</a>
-                </li>
-                <li class="footer_menu_list">
-                    <a href="#projects">Projetos</a>
-                </li>
-                <li class="footer_menu_list">
-                    <a href="#contact">Contato</a>
-                </li>
-            </ul>
-        </div>
-        <div class="footer-social-icons">
-            <img
-                src="./images/linkedin.png"
-                alt="My LinkedIn profile"
-                class="icon"
-                onclick="location.href='https://linkedin.com/alessandro-lopes-6b00a82b4'"
-            />
-            <img
-                src="./images/instagram.png"
-                alt="Meu instagram Profissional"
-                class="icon"
-                onclick="location.href='https://instagram.com/alessandroliveer'"
-            />
-        </div>
-        <div class="bottom-footer">
-            <p>Copyright &copy; <a href="#home" style="text-decoration: none;">Alessandro Óliver</a> - Todos os direitos reservados</p>
-        </div>
-    </footer>
-
+    <div class="heart-container" id="heartContainer"></div>
+    
+    <!-- Envelope inicial -->
+    <div class="envelope" id="envelope">
+        <div class="envelope-flap"></div>
+        <div class="letter"></div>
     </div>
+    
+    <!-- Card com conteúdo romântico -->
+    <div class="card" id="card">
+        <h1>Para o meu amor ❤️</h1>
+        
+        <p>Para a pessoa que faz meu coração bater mais forte e amar todo dia</p>
+        
+        <div class="special-message" id="specialMessage">
+            Uma cartinha especial do seu chato
+        </div>
+        
+        <p>Descubra os motivos do pq eu te amo tanto no jogo da memória abaixo:</p>
+        
+        <div class="memory-game" id="memoryGame">
+            <!-- As cartas serão geradas via JavaScript -->
+        </div>
+        
+        <p>Alguns dos nossos momentos especiais:</p>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">A primeira vez que nós conhecemos</div>
+                    <p>O dia que jogamos queimado na frente de casa</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Dia que ficamos juntos sem esconder nosso namoro</div>
+                    <p>A noite do 2⁰ dia do retiro de carnaval que ficamos juntinhos 🤍</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">Dia que saimos juntos</div>
+                    <p>A primeira missa das crianças que fomos juntos com devinho</p>
+                </div>
+            </div>
+        </div>
+<!-- Adicione este código ao final do HTML, antes do fechamento da tag </div> do card -->
 
-    <!-- ----- TYPING JS Link ----- -->
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+<div class="mini-game-section">
+    <h3>Mini-jogo: Caça ao Coração</h3>
+    <p>Encontre os 5 corações escondidos por toda a página e descubra mensagens de amor secretas!</p>
+    
+    <div class="game-container" id="heartHuntGame">
+        <div class="game-score">Corações encontrados: <span id="heartScore">0</span>/5</div>
+        <div class="game-timer">Tempo: <span id="gameTimer">60</span>s</div>
+        <div class="game-message" id="gameMessage"></div>
+        <button class="btn" id="startGameBtn">Iniciar Jogo</button>
+    </div>
+</div>
 
-    <!-- ----- SCROLL REVEAL JS Link----- -->
-    <script src="https://unpkg.com/scrollreveal"></script>
+<!-- Adicione estes estilos CSS à seção <style> do seu documento -->
+<style>
+    .mini-game-section {
+        margin: 30px 0;
+        padding: 20px;
+        background-color: rgba(255, 77, 121, 0.1);
+        border-radius: 15px;
+        text-align: center;
+    }
+    
+    .mini-game-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+    
+    .game-container {
+        margin-top: 20px;
+        position: relative;
+    }
+    
+    .game-score, .game-timer {
+        display: inline-block;
+        margin: 0 10px;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    .game-message {
+        margin: 15px 0;
+        min-height: 60px;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+    
+    .hidden-heart {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        opacity: 0.2;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        transform: scale(0.8);
+        z-index: 1000;
+    }
+    
+    .hidden-heart:hover {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    
+    .hidden-heart.found {
+        animation: heartFound 1s forwards;
+        opacity: 1;
+        pointer-events: none;
+    }
+    
+    @keyframes heartFound {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    .love-message-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        text-align: center;
+        max-width: 80%;
+    }
+    
+    .love-message-popup p {
+        font-size: 18px;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+    
+    .love-message-popup button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    
+    .game-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.01);
+        z-index: 999;
+        pointer-events: none;
+    }
+</style>
 
-    <!-- ----- MAIN JS ----- -->
-    <script src="main.js"></script>
+<!-- Adicione este script à seção <script> do seu documento -->
+<script>
+    // Mensagens de amor que serão reveladas ao encontrar corações
+    const loveMessagesForGame = [
+        "Meu coração bate forte por você ❤️",
+        "Amo cada detalhe seu princesa 💝",
+        "Você é o sonho que nunca pensei sonhar 💭",
+        "Com você, aproveito cada momento 🏠",
+        "Você me faz querer ser melhor a cada dia 💪"
+    ];
+    
+    // Função para iniciar o jogo de caça ao coração
+    function initHeartHuntGame() {
+        const startGameBtn = document.getElementById("startGameBtn");
+        const gameMessage = document.getElementById("gameMessage");
+        const heartScore = document.getElementById("heartScore");
+        const gameTimer = document.getElementById("gameTimer");
+        
+        let timeLeft = 60; // Aumentei o tempo para 60 segundos já que estão escondidos pela página
+        let score = 0;
+        let timer;
+        let heartsFound = [];
+        let hearts = [];
+        
+        startGameBtn.addEventListener("click", function() {
+            // Resetar o jogo
+            removeExistingHearts();
+            gameMessage.textContent = "";
+            score = 0;
+            heartsFound = [];
+            hearts = [];
+            heartScore.textContent = score;
+            timeLeft = 60;
+            gameTimer.textContent = timeLeft;
+            
+            // Mudar o texto do botão
+            startGameBtn.textContent = "Reiniciar Jogo";
+            
+            // Adicionar overlay para capturar eventos
+            createGameOverlay();
+            
+            // Criar corações escondidos
+            createHiddenHearts();
+            
+            // Iniciar o timer
+            clearInterval(timer);
+            timer = setInterval(function() {
+                timeLeft--;
+                gameTimer.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    
+                    if (score < 5) {
+                        gameMessage.textContent = `Tempo esgotado! Você encontrou ${score} de 5 corações.`;
+                        removeExistingHearts();
+                    }
+                }
+                
+                if (score === 5) {
+                    clearInterval(timer);
+                    gameMessage.textContent = "Parabéns! Você encontrou todos os corações! ❤️";
+                    createHearts(30); // Criar uma celebração de corações
+                }
+            }, 1000);
+        });
+        
+        // Função para criar overlay do jogo
+        function createGameOverlay() {
+            // Remover overlay existente, se houver
+            const existingOverlay = document.querySelector('.game-overlay');
+            if (existingOverlay) {
+                existingOverlay.remove();
+            }
+            
+            const overlay = document.createElement("div");
+            overlay.classList.add("game-overlay");
+            document.body.appendChild(overlay);
+        }
+        
+        // Função para remover corações existentes
+        function removeExistingHearts() {
+            const existingHearts = document.querySelectorAll('.hidden-heart');
+            existingHearts.forEach(heart => heart.remove());
+        }
+        
+        // Função para criar corações escondidos
+        function createHiddenHearts() {
+            // Obter dimensões da página
+            const pageWidth = Math.max(
+                document.documentElement.scrollWidth,
+                document.body.scrollWidth
+            );
+            const pageHeight = Math.max(
+                document.documentElement.scrollHeight,
+                document.body.scrollHeight
+            );
+            
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("hidden-heart");
+                heart.innerHTML = "❤️";
+                heart.dataset.index = i;
+                
+                // Posição aleatória na página
+                let xPos, yPos;
+                let validPosition = false;
+                
+                // Garantir que o coração está em uma posição visível e acessível
+                while (!validPosition) {
+                    xPos = Math.random() * (pageWidth - 100);
+                    yPos = Math.random() * (pageHeight - 100);
+                    
+                    // Evitar posições muito próximas das bordas
+                    if (xPos > 50 && xPos < pageWidth - 50 && 
+                        yPos > 50 && yPos < pageHeight - 50) {
+                        validPosition = true;
+                    }
+                }
+                
+                heart.style.left = `${xPos}px`;
+                heart.style.top = `${yPos}px`;
+                
+                // Evento de clique
+                heart.addEventListener("click", function() {
+                    if (!heartsFound.includes(i)) {
+                        heartsFound.push(i);
+                        this.classList.add("found");
+                        score++;
+                        heartScore.textContent = score;
+                        
+                        showLoveMessage(i);
+                        
+                        if (score === 5) {
+                            clearInterval(timer);
+                            gameMessage.textContent = "Parabéns! Você encontrou todos os corações! ❤️";
+                            createHearts(30);
+                        }
+                    }
+                });
+                
+                document.body.appendChild(heart);
+                hearts.push(heart);
+            }
+        }
+        
+        // Função para mostrar a mensagem de amor
+        function showLoveMessage(index) {
+            const message = loveMessagesForGame[index];
+            
+            const popup = document.createElement("div");
+            popup.classList.add("love-message-popup");
+            
+            const text = document.createElement("p");
+            text.textContent = message;
+            
+            const closeBtn = document.createElement("button");
+            closeBtn.textContent = "Fechar";
+            closeBtn.addEventListener("click", function() {
+                popup.remove();
+            });
+            
+            popup.appendChild(text);
+            popup.appendChild(closeBtn);
+            document.body.appendChild(popup);
+        }
+    }
+    
+    // Adicionar inicialização do jogo
+    document.addEventListener("DOMContentLoaded", function() {
+        // ... (código existente)
+        
+        // Inicializar o jogo de caça ao coração
+        initHeartHuntGame();
+    });
+</script>
+    <script>
+        // Mensagens para o jogo da memória
+        const loveMessages = [
+            "Suas brincadeiras", "Sua risada", "Seu olhar",
+            "Seus labios", "Você por inteira", "Seu abraço",
+            "A sua beleza", "Sua chatice", "Seu jeito único"
+        ];
+        
+        // Mensagens especiais que alternam
+        const specialMessages = [
+            "Amo cada detalhe seu princesa! ❤️",
+            "Vamos casar e ter nossos vampirinhos! ❤️",
+            "Nunca vou te perder, amo vc dmss.",
+            "É muito linda, slk, só podia ser minha mulher 🤷🏻‍♂️",
+            "Roubou meu coração, malokera! ❤️",
+        ];
+        
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", function() {
+            // Configurar o envelope
+            const envelope = document.getElementById("envelope");
+            const card = document.getElementById("card");
+            
+            envelope.addEventListener("click", function() {
+                this.classList.add("open");
+                createHearts(20);
+                
+                // Mostrar o cartão após a abertura do envelope
+                setTimeout(() => {
+                    card.classList.add("visible");
+                    envelope.style.display = "none";
+                }, 1500);
+                
+                // Inicializar o jogo da memória
+                initMemoryGame();
+            });
+            
+            // Configurar o botão de surpresa
+            const surpriseBtn = document.getElementById("surpriseBtn");
+            surpriseBtn.addEventListener("click", function() {
+                createHearts(50);
+                alert("Te amo mais do que palavras podem expressar! ❤️");
+                this.textContent = "Eu te amo infinitamente!";
+                this.disabled = true;
+            });
+            
+            // Configurar a alternância de mensagens especiais
+            const specialMessage = document.getElementById("specialMessage");
+            let currentMessageIndex = 0;
+            
+            setInterval(() => {
+                specialMessage.style.opacity = 0;
+                
+                setTimeout(() => {
+                    currentMessageIndex = (currentMessageIndex + 1) % specialMessages.length;
+                    specialMessage.textContent = specialMessages[currentMessageIndex];
+                    specialMessage.style.opacity = 1;
+                }, 500);
+                
+            }, 5000);
+        });
+        
+        // Função para criar corações flutuantes
+        function createHearts(count) {
+            const heartContainer = document.getElementById("heartContainer");
+            const heartSymbols = ["❤️", "💖", "💕", "💓", "💗", "💘"];
+            
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    
+                    // Posição horizontal aleatória
+                    const xPos = Math.random() * 100;
+                    
+                    // Velocidade e rotação aleatórias
+                    const duration = Math.random() * 6 + 4;
+                    const rotate = Math.random() * 720 - 360;
+                    
+                    // Símbolo aleatório
+                    const symbol = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    
+                    heart.textContent = symbol;
+                    heart.style.left = `${xPos}%`;
+                    heart.style.setProperty("--duration", `${duration}s`);
+                    heart.style.setProperty("--rotate", `${rotate}deg`);
+                    
+                    heartContainer.appendChild(heart);
+                    
+                    // Remover o coração após a animação
+                    setTimeout(() => {
+                        heart.remove();
+                    }, duration * 1000);
+                    
+                }, i * 100);
+            }
+        }
+        let hasFlippedCard = false;
+        let firstCard, secondCard;
+        let lockBoard = false;
+
+        // Substitua a função flipCard e as funções relacionadas por este código
+        function flipCard() {
+            if (this.classList.contains("flipped")) return;
+            
+            // Apenas vira a carta e a mantém virada
+            this.classList.add("flipped");
+            
+            // Opcionalmente criar alguns corações quando uma carta é virada
+            createHearts(5);
+        }
+
+        // Inicializar o jogo da memória modificado
+        function initMemoryGame() {
+            const gameContainer = document.getElementById("memoryGame");
+            const cards = [];
+            
+            // Criar cartas com mensagens de amor
+            for (let i = 0; i < loveMessages.length; i++) {
+                // Criar carta
+                const card = document.createElement("div");
+                card.classList.add("memory-card");
+                card.dataset.message = loveMessages[i];
+                
+                const front = document.createElement("div");
+                front.classList.add("front");
+                front.textContent = loveMessages[i];
+                
+                const back = document.createElement("div");
+                back.classList.add("back");
+                back.textContent = "?";
+                
+                card.appendChild(front);
+                card.appendChild(back);
+                
+                cards.push(card);
+            }
+            
+            // Embaralhar as cartas (opcional)
+            cards.sort(() => Math.random() - 0.5);
+            
+            // Modificar o CSS para ajustar o grid
+            gameContainer.style.gridTemplateColumns = "repeat(3, 1fr)";
+            gameContainer.style.gridTemplateRows = "repeat(3, 1fr)"; // Modificado para 3 linhas já que não temos pares duplicados
+            
+            // Adicionar as cartas ao jogo
+            for (let i = 0; i < cards.length; i++) {
+                gameContainer.appendChild(cards[i]);
+                
+                // Adicionar evento de clique simplificado
+                cards[i].addEventListener("click", flipCard);
+            }
+        }
+
+        // Remover essas funções já que não precisamos delas
+        // Não precisamos mais de: checkForMatch, disableCards, unflipCards, resetBoard
+                    
+        
+    </script>
 </body>
 </html>
